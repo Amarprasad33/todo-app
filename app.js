@@ -1,9 +1,12 @@
 import express from "express";
 import userRouter from "./routes/userRoutes.js";
+import { config } from "dotenv";
 
+export const app = express();
 
-const app = express();
-// const router = express.Router();
+config({
+    path: "./data/config.env",
+})
 
 // Middlewares
 app.use(express.json());
@@ -19,9 +22,8 @@ app.get("/", (req, res) => {
 
 
 
-app.listen(4000, () => {
-    console.log("Server is working");
-})
+
+
 
 
 
