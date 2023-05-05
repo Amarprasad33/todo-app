@@ -1,72 +1,44 @@
 import { User } from "../models/User.js";
-
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 export const getAllUsers = async (req, res) => {
 
-    const users = await User.find({});
-
-    const keyword = req.query.keyword;
-    console.log(keyword);
-
-    res.json({
-        success: true,
-        users,
-    });
 };
 
 export const register = async (req, res) => {
     const { name, email, password } = req.body;
 
-    await User.create({
-        name,
-        email,
-        password,
-    });
+    let user = await User.findOne({ email });
 
-    res.status(201).cookie("tempi", "lol").json({
-        success: true,
-        message: "Registered Successfully",
-    });
-}
+    if(user){
+        return res.status(404).json({
+            success: false,
+            message: "User Already Exist",
+        });
+    }
 
-export const specialFunc = (req, res) => {
-    res.json({
-        success: true,
-        message: "Boii it can be useful while creating for specific task fast and then general like with ids",
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    user = await User.create({ name, email, password: hashedPassword });
+
+    const token = jwt.sign({})
+    
+    res.status(201).json({
+
     })
-}
+};
+
+export const login = async (req, res) => {
+
+};
+
 
 export const getUserDetails = async (req, res) => {
-    const { id } = req.params;
-    const user = await User.findById(id);
+    
+};
 
-    res.json({
-        success: true,
-        user,
-    })
-}
 
-export const updateUser = async (req, res) => {
-    const { id } = req.params;
-    const user = await User.findById(id);
-
-    res.json({
-        success: true,
-        message: "Updated",
-    })
-}
-
-export const deleteUser = async (req, res) => {
-    const { id } = req.params;
-    const user = await User.findById(id);
-
-    await user.remove();
-
-    res.json({
-        success: true,
-        message: "Updated",
-    })
-}
 
 
 

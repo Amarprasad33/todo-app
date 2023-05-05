@@ -10,6 +10,8 @@ config({
 
 // Middlewares
 app.use(express.json());
+
+// Using routes
 app.use("/users" ,userRouter);
 
 
