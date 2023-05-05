@@ -1,6 +1,5 @@
 import express from "express";
-import { User } from "../models/User.js";
-import { deleteUser, getAllUsers, getUserDetails, register, specialFunc, updateUser } from "../controllers/user.js";
+import {  getAllUsers, getUserDetails, register, login  } from "../controllers/user.js";
 
 
 
@@ -10,12 +9,10 @@ router.get("/all", getAllUsers);
 
 router.post("/new", register);
 
-router.get("/userid/special", specialFunc )
+router.post("/login", login);
 
-router.get("/userid/:id")
+router.route("/userid/:id")
     .get(getUserDetails)
-    .put(updateUser)
-    .delete(deleteUser)
 
 
 export default router;
