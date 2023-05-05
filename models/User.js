@@ -12,6 +12,7 @@ const Schema = new mongoose.Schema({
         unique: true,
     },
     password: {
+        required: true,
         type: String,
         select: false,
     },
